@@ -200,19 +200,26 @@
     border-radius:50%;background:rgba(255,255,255,.03);pointer-events:none;
   }
   .cc-top{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+  .cc-chip-area{display:flex;align-items:center;gap:10px;flex-shrink:0}
   .cc-chip{
-    width:46px;height:34px;border-radius:6px;
-    background:linear-gradient(135deg,#e8c547 0%,#d4a017 50%,#c89b3c 100%);
+    width:50px;height:38px;border-radius:7px;
+    background:linear-gradient(145deg,#d4af37 0%,#c5a028 30%,#b8972a 50%,#d4af37 70%,#e8c547 100%);
     position:relative;overflow:hidden;flex-shrink:0;
+    box-shadow:0 1px 3px rgba(0,0,0,.2);
   }
   .cc-chip::before{
-    content:'';position:absolute;inset:4px;border:1.5px solid rgba(0,0,0,.15);
-    border-radius:3px;
+    content:'';position:absolute;top:6px;left:6px;right:6px;bottom:6px;
+    border:1.5px solid rgba(0,0,0,.12);border-radius:4px;
   }
   .cc-chip::after{
-    content:'';position:absolute;top:50%;left:4px;right:4px;height:1.5px;
-    background:rgba(0,0,0,.12);
+    content:'';position:absolute;top:50%;left:6px;right:6px;height:0;
+    border-top:1.5px solid rgba(0,0,0,.1);
   }
+  .cc-chip-lines{
+    position:absolute;top:6px;bottom:6px;left:50%;width:0;
+    border-left:1.5px solid rgba(0,0,0,.08);
+  }
+  .cc-nfc{width:24px;height:24px;opacity:.7;flex-shrink:0}
   .cc-bank-logo{height:38px;max-width:120px;object-fit:contain}
   .cc-bank-logo.light-bg{filter:brightness(0) invert(1)}
   .cc-network-logo{height:32px;width:auto;object-fit:contain;opacity:.9}
@@ -673,9 +680,11 @@
     const bankNameHtml = bank ? bank.name : '';
     const networkSvg = networkLogoSvg(network);
 
+    const nfcSvg = '<svg class="cc-nfc" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 16.5c-1.66-1.66-1.66-4.34 0-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M5.5 19.5c-3.31-3.31-3.31-8.69 0-12" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M11.5 13.5c-.83-.83-.83-2.17 0-3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="12" r="1" fill="#fff"/></svg>';
+
     let cardFrontHtml = '<div class="credit-card" style="background:'+cardGrad+'">' +
       '<div class="cc-top">' +
-        '<div class="cc-chip"></div>' +
+        '<div class="cc-chip-area"><div class="cc-chip"><div class="cc-chip-lines"></div></div>'+nfcSvg+'</div>' +
         bankLogoHtml +
       '</div>' +
       '<div class="cc-number">'+escapeHtml(formatCardNumber(s.card))+'</div>' +
