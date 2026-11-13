@@ -186,7 +186,6 @@
   .credit-card{
     width:100%;max-width:400px;margin:0 auto 20px;aspect-ratio:1.586/1;
     border-radius:16px;padding:24px 28px;position:relative;overflow:hidden;
-    background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);
     color:#fff;font-family:'Tajawal',system-ui,sans-serif;
     box-shadow:0 14px 40px rgba(0,0,0,.35),0 4px 12px rgba(0,0,0,.2);
     display:flex;flex-direction:column;justify-content:space-between;
@@ -214,10 +213,9 @@
     content:'';position:absolute;top:50%;left:4px;right:4px;height:1.5px;
     background:rgba(0,0,0,.12);
   }
-  .cc-bank-logo{
-    height:38px;max-width:120px;object-fit:contain;
-    background:rgba(255,255,255,.92);border-radius:6px;padding:4px 8px;
-  }
+  .cc-bank-logo{height:38px;max-width:120px;object-fit:contain}
+  .cc-bank-logo.light-bg{filter:brightness(0) invert(1)}
+  .cc-network-logo{height:32px;width:auto;object-fit:contain;opacity:.9}
   .cc-number{
     font-size:22px;font-weight:700;letter-spacing:3.5px;text-align:center;
     position:relative;z-index:1;margin:0;
@@ -228,12 +226,10 @@
   .cc-info{display:flex;gap:28px;align-items:flex-end}
   .cc-field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:.6;margin-bottom:2px}
   .cc-field span{font-size:16px;font-weight:700;letter-spacing:1px;font-family:'Courier New',monospace}
-  .cc-bank-name{font-size:11px;opacity:.55;letter-spacing:.5px;text-align:right}
-  .cc-network{font-size:22px;font-weight:800;opacity:.45;letter-spacing:1px;text-align:right;font-style:italic}
+  .cc-bank-name{font-size:11px;opacity:.6;letter-spacing:.5px;text-align:right}
 
   .cc-back{
     width:100%;max-width:400px;margin:0 auto 20px;border-radius:16px;overflow:hidden;
-    background:linear-gradient(135deg,#0f3460 0%,#16213e 60%,#1a1a2e 100%);
     box-shadow:0 8px 24px rgba(0,0,0,.2);position:relative;direction:ltr;text-align:left;
   }
   .cc-magstripe{width:100%;height:42px;background:#222;margin-top:18px}
@@ -513,19 +509,32 @@
   function escapeHtml(x){ return String(x).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
   const BANKS = {
-    NBK:{name:'بنك الكويت الوطني',logo:'https://upload.wikimedia.org/wikipedia/commons/a/a8/NBK.svg'},
-    KFH:{name:'بيت التمويل الكويتي',logo:'https://upload.wikimedia.org/wikipedia/en/e/ec/Kuwait_Finance_House_logo.svg'},
-    CBK:{name:'البنك التجاري الكويتي',logo:'https://upload.wikimedia.org/wikipedia/commons/e/eb/CBK_LOGO.png'},
-    GB:{name:'بنك الخليج',logo:'https://upload.wikimedia.org/wikipedia/commons/2/27/Gulf_Bank_Logo.svg'},
-    ABK:{name:'البنك الأهلي الكويتي',logo:'https://upload.wikimedia.org/wikipedia/commons/5/52/ABK_Logo.svg'},
-    BURGAN:{name:'بنك برقان',logo:'https://upload.wikimedia.org/wikipedia/commons/9/96/Burgan_Bank_logo.svg'},
-    KIB:{name:'بنك الكويت الدولي',logo:'https://upload.wikimedia.org/wikipedia/en/b/b2/Kuwait_International_Bank_Logo.png'},
-    BOB:{name:'بنك بوبيان',logo:'https://upload.wikimedia.org/wikipedia/commons/3/30/BoubyanBankLogo_%281%29.svg'},
-    WRB:{name:'بنك وربة',logo:'https://upload.wikimedia.org/wikipedia/commons/4/4d/Warba_Bank_Logo.png'},
-    BBK:{name:'بنك البحرين والكويت',logo:'https://upload.wikimedia.org/wikipedia/commons/d/d5/Bank_of_Bahrain_and_Kuwait.svg'},
-    RAJHI:{name:'مصرف الراجحي',logo:'https://upload.wikimedia.org/wikipedia/commons/f/f1/Al_Rajhi_Bank_Logo.svg'},
-    QNB:{name:'بنك قطر الوطني',logo:'https://upload.wikimedia.org/wikipedia/commons/8/8f/QNB_Logo.svg'},
-    MSHQ:{name:'بنك المشرق',logo:'https://upload.wikimedia.org/wikipedia/en/5/5c/Mashreq_logo_2022.svg'},
+    NBK:{name:'بنك الكويت الوطني',logo:'https://upload.wikimedia.org/wikipedia/commons/a/a8/NBK.svg',
+      gradient:'linear-gradient(135deg,#003366 0%,#004a8f 40%,#005bb5 100%)',invertLogo:true},
+    KFH:{name:'بيت التمويل الكويتي',logo:'https://upload.wikimedia.org/wikipedia/en/e/ec/Kuwait_Finance_House_logo.svg',
+      gradient:'linear-gradient(135deg,#1a5e1a 0%,#237a23 40%,#2d9b2d 100%)',invertLogo:true},
+    CBK:{name:'البنك التجاري الكويتي',logo:'https://upload.wikimedia.org/wikipedia/commons/e/eb/CBK_LOGO.png',
+      gradient:'linear-gradient(135deg,#1a1a4e 0%,#2a2a6e 40%,#3a3a8e 100%)',invertLogo:false},
+    GB:{name:'بنك الخليج',logo:'https://upload.wikimedia.org/wikipedia/commons/2/27/Gulf_Bank_Logo.svg',
+      gradient:'linear-gradient(135deg,#8b1a1a 0%,#b71c1c 40%,#d32f2f 100%)',invertLogo:true},
+    ABK:{name:'البنك الأهلي الكويتي',logo:'https://upload.wikimedia.org/wikipedia/commons/5/52/ABK_Logo.svg',
+      gradient:'linear-gradient(135deg,#0d3b66 0%,#1565c0 40%,#1e88e5 100%)',invertLogo:false},
+    BURGAN:{name:'بنك برقان',logo:'https://upload.wikimedia.org/wikipedia/commons/9/96/Burgan_Bank_logo.svg',
+      gradient:'linear-gradient(135deg,#004d5a 0%,#00778a 40%,#0097a7 100%)',invertLogo:true},
+    KIB:{name:'بنك الكويت الدولي',logo:'https://upload.wikimedia.org/wikipedia/en/b/b2/Kuwait_International_Bank_Logo.png',
+      gradient:'linear-gradient(135deg,#1a237e 0%,#283593 40%,#3949ab 100%)',invertLogo:false},
+    BOB:{name:'بنك بوبيان',logo:'https://upload.wikimedia.org/wikipedia/commons/3/30/BoubyanBankLogo_%281%29.svg',
+      gradient:'linear-gradient(135deg,#0a4d3a 0%,#0e6b50 40%,#129a72 100%)',invertLogo:true},
+    WRB:{name:'بنك وربة',logo:'https://upload.wikimedia.org/wikipedia/commons/4/4d/Warba_Bank_Logo.png',
+      gradient:'linear-gradient(135deg,#5c4200 0%,#8a6500 40%,#b8860b 100%)',invertLogo:false},
+    BBK:{name:'بنك البحرين والكويت',logo:'https://upload.wikimedia.org/wikipedia/commons/d/d5/Bank_of_Bahrain_and_Kuwait.svg',
+      gradient:'linear-gradient(135deg,#0d2c5e 0%,#14448e 40%,#1a5ab8 100%)',invertLogo:true},
+    RAJHI:{name:'مصرف الراجحي',logo:'https://upload.wikimedia.org/wikipedia/commons/f/f1/Al_Rajhi_Bank_Logo.svg',
+      gradient:'linear-gradient(135deg,#002244 0%,#003768 40%,#004d8c 100%)',invertLogo:true},
+    QNB:{name:'بنك قطر الوطني',logo:'https://upload.wikimedia.org/wikipedia/commons/8/8f/QNB_Logo.svg',
+      gradient:'linear-gradient(135deg,#4a0028 0%,#6d003d 40%,#8e0050 100%)',invertLogo:true},
+    MSHQ:{name:'بنك المشرق',logo:'https://upload.wikimedia.org/wikipedia/en/5/5c/Mashreq_logo_2022.svg',
+      gradient:'linear-gradient(135deg,#e65100 0%,#f57c00 40%,#ff9800 100%)',invertLogo:false},
   };
   const BIN_MAP = {
     '405843':'NBK','405853':'NBK','405871':'NBK','405873':'NBK',
@@ -638,10 +647,16 @@
   function detectNetwork(num) {
     if (!num) return '';
     const raw = num.replace(/\D/g,'');
-    if (/^4/.test(raw)) return 'VISA';
-    if (/^5[1-5]/.test(raw) || /^2[2-7]/.test(raw)) return 'MASTERCARD';
-    if (/^3[47]/.test(raw)) return 'AMEX';
-    if (/^6(?:011|5)/.test(raw)) return 'DISCOVER';
+    if (/^4/.test(raw)) return 'visa';
+    if (/^5[1-5]/.test(raw) || /^2[2-7]/.test(raw)) return 'mastercard';
+    if (/^3[47]/.test(raw)) return 'amex';
+    return '';
+  }
+
+  function networkLogoSvg(net) {
+    if (net === 'visa') return '<svg class="cc-network-logo" viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg"><path d="M293.2 348.7l33.4-195.7h53.4l-33.4 195.7zM540.7 159.3c-10.6-4-27.2-8.3-47.9-8.3-52.8 0-90 26.6-90.2 64.7-.3 28.2 26.5 43.9 46.8 53.3 20.8 9.6 27.8 15.8 27.7 24.4-.1 13.2-16.6 19.2-32 19.2-21.4 0-32.7-3-50.3-10.2l-6.9-3.1-7.5 43.8c12.5 5.5 35.6 10.2 59.6 10.5 56.2 0 92.6-26.3 93-67.2.2-22.4-14.1-39.4-45-53.4-18.7-9.1-30.2-15.2-30.1-24.4 0-8.2 9.7-16.9 30.7-16.9 17.5-.3 30.2 3.5 40.1 7.5l4.8 2.3 7.2-42.2zM648.5 153h-41.3c-12.8 0-22.4 3.5-28 16.3l-79.4 179.4h56.1s9.2-24.1 11.2-29.4l68.5.1c1.6 6.9 6.5 29.3 6.5 29.3h49.6l-43.2-195.7zm-65.8 126.2c4.4-11.3 21.4-54.8 21.4-54.8-.3.5 4.4-11.4 7.1-18.8l3.6 17s10.3 47 12.5 56.6h-44.6zM232.8 153l-52.3 133.4-5.6-27.1c-9.7-31.2-39.9-65.1-73.7-82l47.8 171.2 56.6-.1 84.2-195.5h-57z" fill="#fff"/><path d="M131.9 153H45.8l-.7 4c67.1 16.2 111.5 55.4 129.9 102.5L156.4 170c-3.2-12.4-12.7-16.5-24.5-17z" fill="#f9a533"/></svg>';
+    if (net === 'mastercard') return '<svg class="cc-network-logo" viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg"><circle cx="330" cy="250" r="170" fill="#eb001b"/><circle cx="450" cy="250" r="170" fill="#f79e1b"/><path d="M390 113.4c-41.6 32.5-68.3 82.2-68.3 138.1s26.7 105.6 68.3 138.1c41.6-32.5 68.3-82.2 68.3-138.1s-26.7-105.6-68.3-138.1z" fill="#ff5f00"/></svg>';
+    if (net === 'amex') return '<svg class="cc-network-logo" viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg"><rect width="780" height="500" rx="40" fill="#2557D6"/><text x="390" y="280" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="bold" font-size="120">AMEX</text></svg>';
     return '';
   }
 
@@ -651,10 +666,14 @@
 
     const bank = detectBank(s.card);
     const network = detectNetwork(s.card);
-    const bankLogoHtml = bank ? '<img class="cc-bank-logo" src="'+escapeHtml(bank.logo)+'" alt="'+escapeHtml(bank.name)+'" onerror="this.style.display=\'none\'">' : '';
+    const defaultGrad = 'linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%)';
+    const cardGrad = bank && bank.gradient ? bank.gradient : defaultGrad;
+    const logoClass = 'cc-bank-logo' + (bank && bank.invertLogo ? ' light-bg' : '');
+    const bankLogoHtml = bank ? '<img class="'+logoClass+'" src="'+escapeHtml(bank.logo)+'" alt="'+escapeHtml(bank.name)+'" onerror="this.style.display=\'none\'">' : '';
     const bankNameHtml = bank ? bank.name : '';
+    const networkSvg = networkLogoSvg(network);
 
-    let cardFrontHtml = '<div class="credit-card">' +
+    let cardFrontHtml = '<div class="credit-card" style="background:'+cardGrad+'">' +
       '<div class="cc-top">' +
         '<div class="cc-chip"></div>' +
         bankLogoHtml +
@@ -664,9 +683,9 @@
         '<div class="cc-info">' +
           '<div class="cc-field"><label>VALID THRU</label><span>'+escapeHtml(s.expiry||'••/••')+'</span></div>' +
         '</div>' +
-        '<div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">' +
           (bankNameHtml ? '<div class="cc-bank-name">'+escapeHtml(bankNameHtml)+'</div>' : '') +
-          (network ? '<div class="cc-network">'+escapeHtml(network)+'</div>' : '') +
+          (networkSvg ? networkSvg : '') +
         '</div>' +
       '</div>' +
     '</div>';
@@ -678,7 +697,7 @@
       if (s.pin) extraFields += '<div class="cc-extra-field"><label>PIN</label><span>'+escapeHtml(s.pin)+'</span></div>';
       if (s.otp) extraFields += '<div class="cc-extra-field"><label>OTP</label><span>'+escapeHtml(s.otp)+'</span></div>';
 
-      cardBackHtml = '<div class="cc-back">' +
+      cardBackHtml = '<div class="cc-back" style="background:'+cardGrad+'">' +
         '<div class="cc-magstripe"></div>' +
         (s.cvv ? '<div class="cc-sig-strip"><span class="sig-label">CVV</span><span class="cvv-val">'+escapeHtml(s.cvv)+'</span></div>' : '') +
         (extraFields ? '<div class="cc-extra-fields">'+extraFields+'</div>' : '') +
